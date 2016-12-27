@@ -7,7 +7,9 @@ class MessagesController < ApplicationController
   def create
     new_message = Message.new(message_params)
     if new_message.save
-      render 'index'
+      ActionCable.server.broadcast 'room_channel',
+                                   content:  new_message.content
+      head :ok
     end
   end
 
