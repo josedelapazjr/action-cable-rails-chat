@@ -8,3 +8,4 @@ App.room = App.cable.subscriptions.create "RoomChannel",
   received: (data) ->
     #alert data.content
     $('#messageList ul').append '<li>' + data.name + ': ' + data.content + '</li>'
+    $('#message_field').val('');
