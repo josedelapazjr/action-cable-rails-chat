@@ -19,9 +19,9 @@
 
 <div id='messageList' class="col-md-4">
   <h3>Messages</h3>
-  <ul>
+  <ul class="no-style">
     <% @messages.each do |message| %>
-      <li><%= message.content %></li>
+      <li><%= message.name %>: <%= message.content %></li>
     <% end %>
   </ul>
 </div>

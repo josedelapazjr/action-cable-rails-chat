@@ -8,6 +8,7 @@ class MessagesController < ApplicationController
     new_message = Message.new(message_params)
     if new_message.save
       ActionCable.server.broadcast 'room_channel',
+                                   name: new_message.name,
                                    content:  new_message.content
       head :ok
     end
@@ -15,6 +16,6 @@ class MessagesController < ApplicationController
 
   private
     def message_params
-      params.require(:message).permit(:content)
+      params.require(:message).permit(:name, :content)
     end
 end
