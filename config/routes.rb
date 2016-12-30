@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   root 'messages#index'
   resources :messages
 
+  delete 'messages' => 'messages#destroy_all'
+
   mount ActionCable.server, at: '/cable'
 end

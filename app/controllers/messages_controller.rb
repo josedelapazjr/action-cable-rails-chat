@@ -14,6 +14,11 @@ class MessagesController < ApplicationController
     end
   end
 
+  def destroy_all
+      Message.destroy_all
+      head :ok
+  end
+
   private
     def message_params
       params.require(:message).permit(:name, :content)

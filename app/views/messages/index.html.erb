@@ -18,10 +18,28 @@
 </div>
 
 <div id='messageList' class="col-md-4">
-  <h3>Messages</h3>
+  <span class="header">Messages</span>
+  <span id="clear_button" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
   <ul class="no-style">
     <% @messages.each do |message| %>
       <li><%= message.name %>: <%= message.content %></li>
     <% end %>
   </ul>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('#clear_button').click(function(){
+      var response = confirm("This will clear all the messages, are you sure?");
+      if( response == true ){
+        $.ajax({
+          type: 'DELETE',
+          url: 'messages',
+          success: function(result){
+            $('#messageList li').empty();
+          }
+        });
+      }
+    });
+  });
+</script>

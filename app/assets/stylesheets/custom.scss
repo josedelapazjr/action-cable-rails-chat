@@ -5,4 +5,16 @@ div label, input, textarea {
 ul.no-style {
   list-style-type: none;
   padding-left: 0px;
+  margin-top: 10px;
+}
+
+span.header {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+#messageList {
+  margin-top: 10px;
 }
