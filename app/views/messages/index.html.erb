@@ -1,13 +1,27 @@
-<h1>Messages</h1>
-<div id='messageList'>
+<div class="col-md-4">
+  <h4>Input message:</h4>
+  <%= form_for(@message, remote: true) do |f| %>
+    <div class='form-group'>
+      <label>Name</label>
+      <div>
+        <%= f.text_field :name%>
+      </div>
+    </div>
+    <div class='form-group'>
+      <label>Message</label>
+      <div>
+      <%= f.text_area :content %>
+    </div>
+    </div>
+    <%= f.submit "Send", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<div id='messageList' class="col-md-4">
+  <h3>Messages</h3>
   <ul>
     <% @messages.each do |message| %>
       <li><%= message.content %></li>
     <% end %>
   </ul>
 </div>
-
-<%= form_for(@message, remote: true) do |f| %>
-  <%= f.text_area :content %>
-  <%= f.submit "Send" %>
-<% end %>
