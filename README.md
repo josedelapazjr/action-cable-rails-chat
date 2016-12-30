@@ -20,9 +20,60 @@
 
 4. Create the table:
 
-		> rails db:migrate		
+		> rails db:migrate	
+
+5. Create the message model app/nodels/message.rb
+
+		class Message < ApplicationRecord
+		end
+		
+6. Create message controller app/controllers/messages_controller.rb
+
+		class MessagesController < ApplicationController
+		  def index
+		    @messages = Message.all
+		    @message = Message.new
+		  end
+		
+		  def create
+		    new_message = Message.new(message_params)
+		    if new_message.save
+		    	@messages = Message.all
+     			 @message = Message.new
+		      render 'index'
+		    end
+		  end
+		
+		  private
+		    def message_params
+		      params.require(:message).permit(:content)
+		    end
+		end
 
 
+7. Create view app/views/messages/index.html
+
+		<h1>Messages</h1>
+		<ul>
+		  <% @messages.each do |message| %>
+		    <li><%= message.content %></li>
+		  <% end %>
+		</ul>
+		
+		<%= form_for(@message, remote: true) do |f| %>
+		  <%= f.text_area :content %>
+		  <%= f.submit "Send" %>
+		<% end %>
+
+		
+8. Modify routes config/routes.rb
+
+		Rails.application.routes.draw do
+		  root 'messages#index'
+		  resources :messages
+		end
+
+		
 
 Action Cable
 
@@ -37,14 +88,16 @@ Action Cable
 
 		> rails db:migrate:reset
 		
-3. Inialize channel:
+3. Inialize channel app/channels/room_channel.rb:
 
 		class RoomChannel < ApplicationCable::Channel
 		  def subscribed
 		    stream_from "room_channel"
 		  end
 		
-		  ...
+		  def unsubscribed
+		    # Any cleanup needed when channel is unsubscribed
+		  end
 		end
 		
 4. Modify the message controller to broadcast data after creating message:
@@ -55,7 +108,7 @@ Action Cable
 	      head :ok
 	    end
 	    
-5. Handle received message:
+5. Handle received message app/assets/javascripts/channels/room.coffee:
 
 		App.room = App.cable.subscriptions.create "RoomChannel",
 		  connected: ->
