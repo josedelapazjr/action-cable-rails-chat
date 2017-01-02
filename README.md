@@ -1,4 +1,5 @@
-# README
+# Sample Chat (using Rails ActionCable)
+
 1. Create the rails project:
 
 		> rails new sampleChat -d postgresql
