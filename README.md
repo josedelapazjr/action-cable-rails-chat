@@ -125,3 +125,25 @@ Action Cable
 6. Mount a action cable server in routes:
 
 		mount ActionCable.server, at: '/cable'
+
+7. Modify the config/environments/development.rb file and add the expected client addresses in the following line:
+
+		Rails.application.config.action_cable.allowed_request_origins = ['http://localhost:3001','http://localhost:3002']
+		
+
+Note: If you encounter the following error:
+
+	ActionCable NoMethoError - undeined method 'fetch' for nil:NilClass
+	
+just add the config/cable.yml file:
+
+	development:
+	  adapter: async
+	
+	test:
+	  adapter: async
+	
+	production:
+	  adapter: redis
+	  url: redis://localhost:6379/1
+
